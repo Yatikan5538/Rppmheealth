@@ -3,12 +3,12 @@
         "title": "ยาฉีดคุมกำเนิด",
         "time": "4.13 minute",
         "thumbnail" : "images/thumbnail.png",
-        "videoUrl" : "http://github.com/Yatikan5538/Rppmheealthtest/blob/master/video/contraceptive%20implant.mp4"
+        "videoasset" : "video/contraceptive implant.mp4"
     },
     {
         "title": "ยาฝังกำเนิด",
         "time": "3.15 minute",
         "thumbnail" : "images/thumbnail2.png",
-        "videoUrl" : "http://github.com/Yatikan5538/Rppmheealthtest/blob/master/video/contraceptive%20injection.mp4"
+        "videoasset" : "video/contraceptive injection.mp4"
     }
 ]

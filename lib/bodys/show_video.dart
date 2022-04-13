@@ -236,7 +236,7 @@ class _ShowVideo extends State<ShowVideo> {
 
   _onTapVideo(int index) {
     final controller =
-        VideoPlayerController.network(videoinfo[index]["videoUrl"]);
+        VideoPlayerController.asset(videoinfo[index]["videoasset"]);
     _controller = controller;
     setState(() {});
     controller
