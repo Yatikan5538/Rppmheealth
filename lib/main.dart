@@ -1,35 +1,59 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:rppmhealth/states/admin_service.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:rppmhealth/states/recordovst.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rppmhealth/bodys/show_video.dart';
+
+
 import 'package:rppmhealth/states/authen.dart';
+import 'package:rppmhealth/states/Patient_service.dart';
+
 import 'package:rppmhealth/states/create_account.dart';
-import 'package:rppmhealth/states/patientq1.dart';
-import 'package:rppmhealth/states/patientq2.dart';
-import 'package:rppmhealth/states/patientq3.dart';
-import 'package:rppmhealth/states/patientq4.dart';
-import 'package:rppmhealth/states/patient_service.dart';
-import 'package:rppmhealth/states/staff_service.dart';
+
+import 'package:rppmhealth/states/Staff_service.dart';
+
+
 import 'package:rppmhealth/utility/my_constant.dart';
 
 final Map<String, WidgetBuilder> map = {
   '/authen': (BuildContext context) => Authen(),
   '/createAccount': (BuildContext context) => CreateAccount(),
-  '/patientService': (BuildContext context) => PatientService(),
-  '/staffService': (BuildContext context) => StaffService(),
-  '/adminService': (BuildContext context) => AdminService(),
-  '/patientq1' : (BuildContext context) => patientq1(),
-  '/patientq2' : (BuildContext context) => patientq2(),
-  '/patientq3' : (BuildContext context) => patientq3(),
-  '/patientq4' : (BuildContext context) => patientq4(),
+  '/PatientService': (BuildContext context) => PatientService(),
+  '/Showvideo': (BuildContext context) => ShowVideo(),
+  '/riderService': (BuildContext context) => RiderService(),
+  '/OvstRecord': (BuildContext context) => OvstRecord(),
   
-
-
+ 
+ 
 };
-
+    
 String? initlalRoute;
 
-void main() {
-  initlalRoute = MyConstant.routeAuthen;
-  runApp(MyApp());
+Future<Null> main() async {
+  HttpOverrides.global = MyHttpOverride();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? type = preferences.getString('type');
+  // print('### type ===>> $type');
+  if (type?.isEmpty ?? true) {
+    initlalRoute = MyConstant.routeAuthen;
+    runApp(MyApp());
+  } else {
+    switch (type) {
+      case 'Patient':
+        initlalRoute = MyConstant.routeHomePage;
+        runApp(MyApp());
+        break;
+      case 'Staff':
+        initlalRoute = MyConstant.routeStaffService;
+        runApp(MyApp());
+        break;
+      default:
+    }
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -37,10 +61,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    MaterialColor materialColor =
+        MaterialColor(0xff575900, MyConstant.mapMaterialColor);
+    return GetMaterialApp(
       title: MyConstant.appName,
       routes: map,
       initialRoute: initlalRoute,
+      theme: ThemeData(primarySwatch: materialColor),
+    );
+  }
+}
+
+class MyHttpOverride extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    // TODO: implement createHttpClient
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (cert, host, port) => true;
+  }
+}
+class Homepage extends StatelessWidget {
+  const Homepage({ Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Rppmhealth',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+      ),
+      home: Homepage(),
     );
   }
 }
