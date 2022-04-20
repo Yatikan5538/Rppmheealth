@@ -18,9 +18,9 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$idSeller = $_GET['idSeller'];
+		$cid = $_GET['cid'];
 
-		$result = mysqli_query($link, "SELECT * FROM product WHERE idSeller = '$idSeller'");
+		$result = mysqli_query($link, "SELECT * FROM questions WHERE cid = '$cid'");
 
 		if ($result) {
 
@@ -33,7 +33,7 @@ if (isset($_GET)) {
 
 		} //if
 
-	} else echo "Welcome Master UNG";	// if2
+	} else echo "Welcome Rppmhealth";	// if2
    
 }	// if1
 

@@ -20,7 +20,7 @@ if (isset($_GET)) {
 				
 		$user = $_GET['user'];
 
-		$result = mysqli_query($link, "SELECT * FROM user WHERE user = '$user'");
+		$result = mysqli_query($link, "SELECT * FROM patient WHERE user = '$user'");
 
 		if ($result) {
 
@@ -33,7 +33,7 @@ if (isset($_GET)) {
 
 		} //if
 
-	} else echo "Welcome Master UNG";	// if2
+	} else echo "Welcome RPPmhealth by IT KNH";	// if2
    
 }	// if1
 

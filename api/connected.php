@@ -3,4 +3,4 @@
     error_reporting(0);
     error_reporting(E_ERROR | E_PARSE);
     header("content-type:text/javascript;charset=utf-8");
-    $link = mysqli_connect('localhost', 'root', 'Kim5eom', "rppmhealth_rpp");
+    $link = mysqli_connect('localhost', 'root', 'Kim5eom2012', "rppmhealth_rpp");
