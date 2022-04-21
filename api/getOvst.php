@@ -18,26 +18,25 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$idSeller = $_GET['idSeller'];
-		$nameSeller = $_GET['nameSeller'];
-		$name = $_GET['name'];
-		$price = $_GET['price'];
-		$detail = $_GET['detail'];
-		$images = $_GET['images'];
-		
-				
-		$sql = "INSERT INTO `product`(`id`, `idSeller`, `nameSeller`, `name`, `price`, `detail`, `images`) VALUES (Null,'$idSeller','$nameSeller','$name','$price','$detail','$images')";
+		$cid = $_GET['cid'];
 
-		$result = mysqli_query($link, $sql);
+		$result = mysqli_query($link, "SELECT * FROM ovst WHERE cid = '$cid'");
 
 		if ($result) {
-			echo "true";
-		} else {
-			echo "false";
-		}
 
-	} else echo "Welcome Master UNG";
+			while($row=mysqli_fetch_assoc($result)){
+			$output[]=$row;
+
+			}	// while
+
+			echo json_encode($output);
+
+		} //if
+
+	} else echo "Welcome RPPmhealth by IT KNH";	// if2
    
-}
+}	// if1
+
+
 	mysqli_close($link);
 ?>

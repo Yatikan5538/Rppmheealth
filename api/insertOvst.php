@@ -18,21 +18,20 @@ if (!$link->set_charset("utf8")) {
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		$id = $_GET['id'];
-		$pname = $_GET['pname'];
-		$fname = $_GET['fname'];
-        $lname = $_GET['lname'];
-		$e_mail= $_GET['e_mail'];
-		$tel= $_GET['tel'];
-		$id_line = $_GET['id_line'];
-		$hcode= $_GET['hcode'];
-		$user= $_GET['user'];
-		$pass = $_GET['pass'];
+		$vn = $_GET['vn'];
+		$cid = $_GET['cid'];
+		$vstdate = $_GET['vstdate'];
+		$vsttime = $_GET['vsttime'];
+		$fp_type = $_GET['fp_type'];
+		$schedul_date = $_GET['schedul_date'];
+		$schedul_time = $_GET['schedul_time'];
+		$c_y = $_GET['c_y'];
+		$staff = $_GET['staff'];
 		$status = $_GET['status'];
 		
-		
-							
-		$sql = "INSERT INTO `member2`(`id`, `pname`, `fname`, `lname`, `e_mail`, `tel`, `id_line`, `hcode`, `user`, `pass`, `status`) VALUES (Null,'$pname','$fname','$lname','$e_mail','$tel','$id_line','$hcode','$user','$pass','$status')";
+				
+		$sql = "INSERT INTO `ovst`(`vn`, `cid`, `vstdate`, `vsttime`, `fp_type`, `schedul_date`, `schedul_time`, `c_y`, `staff`, `status`)
+		 VALUES (Null,'$cid','$vstdate','$vsttime','$fp_type','$schedul_date','$schedul_time','$c_y','$staff','$status')";
 
 		$result = mysqli_query($link, $sql);
 
@@ -42,7 +41,7 @@ if (isset($_GET)) {
 			echo "false";
 		}
 
-	} else echo "Welcome RPPmhealth2";
+	} else echo "Welcome Master UNG";
    
 }
 	mysqli_close($link);

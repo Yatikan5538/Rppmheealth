@@ -4,7 +4,7 @@ class MyConstant {
   // Genernal
   static String appName = 'RPP mhealth';
   static String domain =
-      'https://e455-2001-44c8-422e-32b1-a493-15f6-fea-c8e3.ngrok.io';
+      'https://865f-2001-44c8-422e-32b1-65f0-ceb4-1c33-ff8a.ngrok.io';
   static String publicKey = 'pkey_test_5pp9n4x6lu8v0riuskf';
   static String secreKey = 'skey_test_5pj6xiqsml00cgz0ze2';
 
