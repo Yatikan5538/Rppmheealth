@@ -1,6 +1,11 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:rppmhealth/models/ovst_model.dart';
 import 'package:rppmhealth/widgets/show_signout.dart';
 import 'package:rppmhealth/utility/my_constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OvstRecord extends StatefulWidget {
   const OvstRecord({Key? key}) : super(key: key);
@@ -10,7 +15,8 @@ class OvstRecord extends StatefulWidget {
 }
 
 class _OvstRecordState extends State<OvstRecord> {
-List<String> items = ['วิธีคุมกำเนิด',
+  List<String> items = [
+    'วิธีคุมกำเนิด',
     'ไม่คุมกำเนิด',
     'ยาเม็ดคุมกำเนิด',
     'ยาฉีดคุมกำเนิด',
@@ -20,8 +26,29 @@ List<String> items = ['วิธีคุมกำเนิด',
     'ทำหมันชาย',
     'ทำหมันหญิง'
   ];
- String? selectedItemcontraceptive = 'วิธีคุมกำเนิด';
+  String? selectedItemcontraceptive = 'วิธีคุมกำเนิด';
 
+  @override
+  void initState() {
+    super.initState();
+    loadValueFromAPI();
+  }
+
+  // ignore: prefer_void_to_null
+  Future<Null> loadValueFromAPI() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String cid = preferences.getString('cid')!;
+
+    String apiGetovst =
+        '${MyConstant.domain}/rppmhealth/getOvst.php?isAdd=true&usercid=$cid';
+    await Dio().get(apiGetovst).then((value) {
+      //print('value ==> $value');
+      for (var item in json.decode(value.data)) {
+        OvstModel model = OvstModel.fromMap(item);
+        print('type fp ==> ${model.fp_type} ');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,51 +102,53 @@ List<String> items = ['วิธีคุมกำเนิด',
                 )),
               ),
               SizedBox(
-              height: 5,
-            ),
-            Padding(padding: const EdgeInsets.only(right: 20),),
-            Text(
-                    "สรุปการเลือกวิธีคุมกำเนิด",
-                    style: MyConstant().h5Style(),
-                  ),
-              Row (
-     mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 10,bottom: 10),
-          width: size * 0.8,
-          child: SizedBox(
-            width: 200,
-            child: DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.pink,
-                    )),
+                height: 5,
               ),
-              value: selectedItemcontraceptive,
-              items: items
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: MyConstant().h2Style(),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+              ),
+              Text(
+                "สรุปการเลือกวิธีคุมกำเนิด",
+                style: MyConstant().h5Style(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    width: size * 0.8,
+                    child: SizedBox(
+                      width: 200,
+                      child: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                width: 1,
+                                color: Colors.pink,
+                              )),
                         ),
-                      ))
-                  .toList(),
-              onChanged: (item) => setState(() => selectedItemcontraceptive = item),
-            ),
-        ),
-        )
-      ],
-    
-  ),
-  SizedBox(
-              height: 20,
-            ),
-            Container(
+                        value: selectedItemcontraceptive,
+                        items: items
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style: MyConstant().h2Style(),
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (item) =>
+                            setState(() => selectedItemcontraceptive = item),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
                 width: 400,
                 height: 50,
                 margin: EdgeInsets.only(bottom: 15),
@@ -152,11 +181,6 @@ List<String> items = ['วิธีคุมกำเนิด',
                       )),
                 )),
               ),
-
-
-
-
-
             ],
           ),
         ),
